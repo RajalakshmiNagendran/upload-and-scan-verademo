@@ -22,7 +22,7 @@ steps:
     AnalysisService: 'veracodeservice'
     veracodeAppProfile: '$(system.teamProject)'
     version: '$(build.buildNumber)'
-    filepath: '$(build.artifactstagingdirectory)/app/target'
+    filepath: '$(Build.SourcesDirectory)/app/target'
     createProfile: true
     failBuildIfUploadAndScanBuildStepFails: true
     importResults: true
