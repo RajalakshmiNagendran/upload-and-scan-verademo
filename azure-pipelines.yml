@@ -1,9 +1,10 @@
 trigger:
 - main
 pool:
-  vmImage: 'azureagent'
+  name: 'azureagent'
 steps:
-- task: Maven@3
+
+- task: Maven@4
   displayName: Build with Maven
   inputs:
     mavenPomFile: 'app/pom.xml'
