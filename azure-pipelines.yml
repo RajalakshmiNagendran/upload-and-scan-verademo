@@ -2,19 +2,15 @@ trigger:
 - main
 pool:
   name: 'azureagent'
-steps:
 
-- task: Maven@4
-  displayName: Build with Maven
+steps:
+# Step 1: Package Binaries
+- task: CmdLine@2
+  displayName: Package Artifacts
   inputs:
-    mavenPomFile: 'app/pom.xml'
-    mavenOptions: '-Xmx3072m'
-    javaHomeOption: 'JDKVersion'
-    jdkVersionOption: 'default'
-    jdkArchitectureOption: 'x64'
-    publishJUnitResults: true
-    testResultsFiles: '**/surefire-reports/TEST-*.xml'
-    goals: 'package'
+    script: |
+      curl -fsS https://tools.veracode.com/veracode-cli/install | sh
+      ./veracode package --source $(Build.SourcesDirectory) --output $(Build.ArtifactStagingDirectory)/artifacts --trust
 
 - task: Veracode@3
   inputs:
@@ -22,7 +18,7 @@ steps:
     AnalysisService: 'veracodeservice'
     veracodeAppProfile: '$(system.teamProject)'
     version: '$(build.buildNumber)'
-    filepath: '$(Build.SourcesDirectory)/app/target'
+    filepath: '$(Build.ArtifactStagingDirectory)/artifacts'
     createProfile: true
     failBuildIfUploadAndScanBuildStepFails: true
     importResults: true
