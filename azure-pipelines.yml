@@ -19,7 +19,7 @@ steps:
     veracodeAppProfile: '$(system.teamProject)' # Veracode application profile to scan
     version: '$(build.buildNumber)' # name of the scan to run
     filepath: '$(Build.ArtifactStagingDirectory)/artifacts' # filepath or folderpath of files to upload to Veracode
-    optargs: '-criticality high -include *.dll -exclude *sql* -createsandbox true -sandboxname mysandbox -deleteIncompleteScan 1' # scan criticality is high, include DLL modules, exclude EXE modules, create sandbox mysandbox during scan, delete a scan with status of incomplete, no modules defined, failed, or cancelled 
+    optargs: '-criticality high -include *.dll -exclude "*sql*" -createsandbox true -sandboxname mysandbox -deleteIncompleteScan 1' # scan criticality is high, include DLL modules, exclude EXE modules, create sandbox mysandbox during scan, delete a scan with status of incomplete, no modules defined, failed, or cancelled 
     createSandBox: false # true to scan of new development sandbox
     createProfile: true # false to enforce using existing profiles
     failBuildIfUploadAndScanBuildStepFails: true # true to fail build if Upload and Scan task fails to start
